@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   postgresdb:
-    image: postgres:17
+    image: postgres
     container_name: postgresDB
     environment:
       POSTGRES_USER: admin
