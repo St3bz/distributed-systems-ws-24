@@ -1,17 +1,10 @@
 version: '3.8'
 
 services:
-  fastapi-app:
-    build: .
-    ports:
-      - "8000:8000"
-    environment:
-      - DATABASE_URL=postgresql+asyncpg://admin:admin@db/shoppingDB
-    depends_on:
-      - db
 
-  db:
-    image: postgres:13
+  postgresdb:
+    image: postgres:17
+    container_name: postgresDB
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
@@ -20,6 +13,21 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  fastapi-backend:
+    container_name: fastapi-backend
+    environment:
+      DATABASE_URL: postgresql://admin:admin@postgresDB/shoppingDB
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - postgresdb
+        
+
 
 volumes:
   postgres_data:
