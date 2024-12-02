@@ -53,11 +53,11 @@ async def get_db():
 
 async def init_db():
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+        await conn.run_sync(Base.metadata.create_all(bind=engine))
 
-#@app.on_event("startup")
-#async def startup_event():
-#    await init_db()
+@app.on_event("startup")
+async def startup_event():
+    await init_db()
 
 @app.post("/api/shopping", response_model=ItemResponse)
 async def create_item(item: ItemSchema, db: AsyncSession = Depends(get_db)):
