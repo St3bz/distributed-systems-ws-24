@@ -1,14 +1,14 @@
-version: '3.8'
+version: '3.9'
 
 services:
 
   postgresdb:
     image: postgres
-    container_name: postgresDB
+    container_name: postgresDb
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: shoppingDB
+      POSTGRES_DB: shoppingDb
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -17,13 +17,12 @@ services:
   fastapi-backend:
     container_name: fastapi-backend
     environment:
-      DATABASE_URL: postgresql://admin:admin@postgresDB/shoppingDB
+      DATABASE_URL: postgresql://admin:admin@postgresDb/shoppingDb
     build: 
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
-    restart: always
+      - "8000:8000"
     depends_on:
       - postgresdb
         
