@@ -3,4 +3,3 @@ uvicorn[standard]
 pydantic
 sqlalchemy
 asyncpg
-#psycopg2
