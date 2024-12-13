@@ -1,0 +1,27 @@
+# PostgreSQL-Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping-app-postgres  
+spec:
+  selector:
+    app: postgresdb
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP
+---
+# FastAPI-Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping-app-backend 
+spec:
+  selector:
+    app: fastapi-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer

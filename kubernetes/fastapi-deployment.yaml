@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-app
+spec:
+  replicas: 2  # Anzahl der Pods
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+      - name: fastapi-container
+        image: stebz/fastapi:latest  # Verwende hier dein Docker-Image
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DATABASE_URL
+          value: "postgresql+asyncpg://admin:admin@postgresdb:5432/shoppingDb"
